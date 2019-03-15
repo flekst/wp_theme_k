@@ -190,7 +190,7 @@ function getPostById($id){
 
 function ktheme1_excerpt_more( $more ) {
  $retval = sprintf( '<div class="excerpt_more_link"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) );
- $retval = $retval . __('excerpt_more', 'ktheme1').'</a></div>';
+ $retval = $retval . __('Read more', 'ktheme1').'</a></div>';
 
     return $retval;
 }
