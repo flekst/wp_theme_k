@@ -1,0 +1,10 @@
+.site {
+  @import 'header';
+  @import 'content-container';
+  @import 'footer';
+}
+
+@import 'home-content-container';
+@import 'post';
+@import 'post-home';
+@import 'widgets';

@@ -1,0 +1,45 @@
+.home .site, .archive .site {
+  .site-content {
+    align-items: flex-start;
+    display: flex;
+    width: 100%;
+    padding-left: 2rem;
+    padding-right: 2rem;
+
+    .content-area {
+      .site-main {
+        /* Some gutter */
+
+        /* Adjustment for the gutter */
+        width: 100%;
+        max-width:1280px;
+        margin-left: auto;
+
+        .post {
+          width: 31%;
+          margin:1%;
+         
+        }
+
+        @media only screen and (max-width: 1260px) {
+          /* styles for browsers larger than 960px; */
+          .post {
+            width: 48%;
+            margin: 1%;
+          }
+        }
+
+        @media only screen and (max-width: 960px) {
+          /* styles for browsers larger than 960px; */
+          .post {
+            width: 98%;
+            margin: 1%;
+          }
+        }
+        
+      }
+    }
+  }
+
+
+}

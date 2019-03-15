@@ -1,0 +1,13 @@
+.site-content {
+  align-items: flex-start;
+  display: flex;
+  width: 100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+
+  .content-area {
+    margin-left: auto;
+    max-width: 1280px;
+    width: 100%;
+  }
+}

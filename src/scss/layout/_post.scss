@@ -1,0 +1,29 @@
+.search-results {
+  .type-post {
+    padding-bottom: 3em;
+  }
+}
+
+.site-main {
+  max-width: 860px;
+  margin: auto;
+  margin-top: 1em;
+}
+
+.type-post {
+  .byline {
+    display: none;
+  }
+
+  .cat-links {
+    margin-right: 1em;
+  }
+
+  .entry-footer {
+    margin-top: 1em;
+
+    .cat-links {
+      margin-right: 1em;
+    }
+  }
+}

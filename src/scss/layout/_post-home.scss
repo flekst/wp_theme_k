@@ -1,0 +1,56 @@
+.MasonryWrapper {
+  margin-top: 1em;
+}
+
+.home .type-post, .archive .type-post {
+  background: white;
+
+  &:hover {
+    background: white;
+  }
+
+  margin: 5em;
+  padding: 1em;
+  box-sizing: border-box;
+  box-shadow: 0 15px 10px rgba(0, 0, 0, 0.7);
+
+  .entry-header {
+    background: transparent;
+    margin: 1em;
+
+    .entry-meta {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+
+      .entry-date {
+        margin-right: 1em;
+      }
+
+      .edit-link {
+        margin-left: 1em;
+      }
+    }
+
+    .entry-title {
+      line-height: 1.5;
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+  }
+
+  .entry-summary {
+    margin: 1em;
+  }
+}
+
+.excerpt_more_link {
+  background: red;
+  padding: 0.5em;
+  width: 100px;
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
+}
