@@ -38,7 +38,8 @@ const php = {
 };
 
 const staticFiles = {
-  src: [dir.src + '**/*.txt', dir.src + '**/*.pot',dir.src + '**/*.po', dir.src + 'LICENSE', dir.src +
+  src: [dir.src + '**/*.txt', dir.src + '**/*.pot', dir.src + '**/*.po', dir.src +
+    'LICENSE', dir.src +
     'README.md'
   ],
   build: dir.build
@@ -180,6 +181,7 @@ gulp.task('watch',
 
   }));
 
-gulp.task('build', gulp.series(gulp.series('images'), gulp.parallel('php', 'staticFiles', 'css', 'js')) );
+gulp.task('build', gulp.series(gulp.series('images'), gulp.parallel('php',
+  'staticFiles', 'css', 'js')));
 
 gulp.task('default', gulp.series('build', 'watch'));
