@@ -1,0 +1,267 @@
+// Минимальный кегль на смартфонах XXXS
+// Максимальный плавно растет в зависимости от ширины экрана
+// Далее идет рос в два раза до "нормального" кегля
+// Далее идёт рост "больших" кеглей
+// Такой страный метод расчётов сделан для того, что бы обычный текст занимал две линии
+$basefontsize: 5px;
+$baseline: 1.5;
+$heading-font: "Roboto", sans-serif;
+$text-font: "Open Sans", serif;
+$sizes: (
+  XXXL:5,
+  XXL:4,
+  XL:3.5,
+  L: 3,
+  M:2.5,
+  R:2,
+  S:1.75,
+  XS:1.5,
+  XXS:1.25,
+  XXXS:1
+);
+
+@function get-size($string) {
+  @return map-get($sizes, $string);
+}
+
+// Расчёт интерлиньяжа в зависимости от множителя
+@function calc-line-height-no-units($multiplier) {
+  @if $multiplier <= 1 {
+    @return $baseline;
+  } @else {
+    @return ceil($multiplier) * $baseline;
+  }
+}
+// Расчёт интерлиньяжа в rem
+@function calc-line-height($multiplier) {
+  $lh: calc-line-height-no-units($multiplier);
+  @return #{$lh}rem;
+}
+// Расчёт кегля в rem
+@function calc-font-height($multiplier) {
+  @return #{$multiplier}rem;
+}
+
+// Отступы в линиях Предполагаю, что эта функция будет активно использоваться
+@function n-lines($size) {
+  @if $size == 0 {
+    @return 0;
+  }
+  @return calc-line-height($size);
+}
+
+// микcин для соблюдения вертикального ритма
+@mixin calcfont($multiplier) {
+  font-size: calc-font-height($multiplier);
+  $lh: calc-line-height($multiplier);
+  line-height: $lh;
+}
+
+// сборка базовых стилей
+@each $size, $multiplier in $sizes {
+  .#{$size} {
+    @extend .margin-top-1;
+    @include calcfont($multiplier);
+  }
+}
+
+@for $i from 0 through 10 {
+  @each $offset in ("margin", "padding") {
+    .#{$offset}-#{$i} {
+      #{$offset}: n-lines($i);
+    }
+
+    @each $side in ("top", "right", "left", "bottom") {
+      .#{$offset}-#{$side}-#{$i} {
+        #{$offset}-#{$side}: n-lines($i);
+      }
+    }
+
+    .#{$offset}-v-#{$i} {
+      @extend .#{$offset}-top-#{$i};
+      @extend .#{$offset}-bottom-#{$i};
+    }
+
+    .#{$offset}-h-#{$i} {
+      @extend .#{$offset}-left-#{$i};
+      @extend .#{$offset}-right-#{$i};
+    }
+  }
+
+  .offset-#{$i} {
+    @extend .margin-#{$i};
+    @extend .padding-#{$i};
+  }
+}
+
+@mixin variable-width($min-width, $content-widht, $font-multiplier) {
+  @media screen and (min-width: $min-width) {
+    html {
+      font-size: $basefontsize * $font-multiplier;
+    }
+
+    .content-sizes {
+      width: $content-widht;
+    }
+  }
+}
+
+@mixin variable-width-max($min-width, $content-widht, $font-multiplier) {
+  @media screen and (max-width: $min-width) {
+    html {
+      font-size: $basefontsize * $font-multiplier;
+    }
+
+    .content-sizes {
+      width: $content-widht;
+    }
+  }
+}
+
+// Вариации размеров кегля и ширины блока в зависимости от ширины
+@include variable-width-max(240px, 90%, 1);
+@include variable-width(241px, 90%, 1.1);
+@include variable-width(320px, 90%, 1.2);
+@include variable-width(420px, 90%, 1.3);
+@include variable-width(640px, 90%, 1.4);
+@include variable-width(800px, 90%, 1.5);
+@include variable-width(1024px, 1000px, 1.6);
+@include variable-width(1280px, 1200px, 1.7);
+@include variable-width(1440, 1200px, 1.8);
+@include variable-width(1600px, 1400px, 1.9);
+@include variable-width(1980px, 1400px, 2);
+
+// Конец ритмовки -----------
+
+// Пример применения --------
+$color-white: #fff;
+$color-light: #ccc;
+$color-gray: #888;
+$color-code: #ee3;
+$color-text: #333;
+
+// Применение стилей к объектам
+.demo {
+  // Используется для отладки. К нему прикручен
+  // стиль, показывающий базовые линии
+  background-image: linear-gradient($color-white, $color-light);
+  background-repeat: repeat-y;
+  background-size: 100% n-lines(1);
+}
+
+// дефолтные настройки шрифта и отступов
+* {
+  @extend .offset-0;
+  color: $color-text;
+  font-family: inherit;
+  line-height: inherit;
+}
+
+p,
+div,
+header,
+foother,
+main {
+  @extend .margin-top-1;
+  font-family: $text-font;
+}
+
+.content-sizes {
+  @extend .offset-0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+.contents {
+  @extend .content-sizes;
+}
+
+code {
+  background-color: $color-gray;
+  color: $color-code;
+  font-family: monospace !important;
+  font-size: 0.7em;
+  font-weight: normal !important;
+  padding: 0.15em;
+
+  * {
+    color: inherit;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header {
+  @extend .margin-v-1;
+  font-family: $heading-font !important;
+
+  * {
+    font-family: inherit !important;
+    font-weight: bolder;
+  }
+}
+
+header {
+  @extend .margin-v-5;
+  @extend .R;
+  text-align: center;
+}
+
+h1 {
+  @extend .XXXL;
+  @extend .margin-top-8;
+  @extend .margin-bottom-5;
+}
+
+h2 {
+  @extend .XXL;
+  @extend .margin-top-5;
+  @extend .margin-bottom-4;
+}
+
+h3 {
+  @extend .L;
+  @extend .margin-top-2;
+}
+
+h4 {
+  @extend .L;
+}
+
+.lid {
+  @extend .M;
+  @extend .margin-v-5;
+  @extend .padding-6;
+  background-color: $color-light;
+  box-sizing: border-box;
+  font-family: $heading-font !important;
+  font-weight: normal;
+}
+
+.contents {
+  @extend .R;
+}
+
+main {
+  @extend .R;
+}
+
+footer {
+  @extend .S;
+  @extend .margin-top-8;
+  @extend .padding-h-2;
+  background: $color-gray;
+  color: $color-white;
+}
